@@ -10,7 +10,7 @@ const predict = (innerText) => {
     let returnVals = ['Stonks', 'Not Stonks', 'Nothing'];
 
     // The number we're generating
-    let generatedNum = (sumTodate() * asciiSum(innerText) + Math.round(Math.log2(asciiSum(innerText)))) % 3;
+    let generatedNum = (sumTodate() * asciiSum(innerText) + Math.round(Math.log2(asciiSum(innerText)) * sumTodate())) % 3;
 
     return returnVals[generatedNum];
 }
