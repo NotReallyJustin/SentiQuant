@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="UTF-8" />
+
+        <!-- Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link href="https://fonts.googleapis.com/css2?family=Anton&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet" />
+        
+        <!-- Color Palette: https://coolors.co/8517fc-07075c-580092-ffffff-c8b8db -->
+        
+        <!-- Style -->
+        <link rel="stylesheet" href="./animation.css" />
+        <style>
+            body
+            {
+                background: rgba(88,0,146,1);
+                background-image: radial-gradient(circle at center, rgba(88,0,146,1) 0%, rgba(7,7,92,1) 75%, rgba(0,6,48,1) 100%);
+            }
+            
+            #logo
+            {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+            }
+
+            #logoTitle 
+            {
+                font-family: "Anton", sans-serif;
+                font-weight: 400;
+                font-style: normal;
+                font-size: 5em;
+                text-shadow: 0.2rem 0.2rem #8517fc;
+                color: rgb(255, 255, 255);
+            }
+
+            #logoDesc
+            {
+                font-family: "Silkscreen", sans-serif;
+                font-weight: 400;
+                font-style: normal;
+                font-size: 2em;
+                /* color:rgb(202, 202, 202); */
+                color: #C8B8DB;
+
+                text-align: center;
+            }
+
+            #centerDiv
+            {
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                display: flex;
+                width: 100%;
+                height: 100vh;
+            }
+            
+            #crystalBallDiv
+            {
+                height: 50%;
+                width: 40%;
+                text-align: center;
+
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            #crystalBall
+            {
+                display: inline-block;
+                position: relative;
+                height: 100%;
+                width: auto;
+            }
+
+            #bimbop
+            {
+                position: absolute;                
+                font-family: "Silkscreen", sans-serif;
+                font-weight: 400;
+                font-style: normal;
+                font-size: 1em;
+                color:rgb(202, 202, 202);
+            }
+        </style>
+        <script src="./predictor.js"></script>
+        <script>
+
+            /**
+             * When someone clicks [Enter], we start predicting and showing the results on the crystal ball. 
+            */
+            function addProcessEvent()
+            {
+                const crystalBallDiv = document.getElementById("bimbop");
+                const restore = "It's giving";
+
+                document.body.addEventListener("keypress", (e) => {
+                    if (e.key == 'Enter')
+                    {
+                        // If there's a "it's giving result", don't do anything
+                        // Otherwise, process this
+                        if (!crystalBallDiv.innerText.includes(restore))
+                        {
+                            // Do animations. Each one is 1s
+                            crystalBallDiv.classList.add("fadeOut");
+
+                            window.setTimeout(() => {
+                                crystalBallDiv.classList.remove("fadeOut");
+                                crystalBallDiv.classList.add("fadeIn");
+                                crystalBallDiv.innerText = `It's giving\n${predict(crystalBallDiv.innerText)}`;
+
+                                window.setTimeout(() => {
+                                    crystalBallDiv.classList.remove("fadeIn");
+                                }, 1000);
+                            }, 1000);
+                        }
+                    }
+                });
+            }
+
+            function allow_put(crystalBallDiv)
+            {
+                // crystalBallDiv.contentEditable = true;
+            }
+
+        </script>
+    </head>
+    <body onload="addProcessEvent();">
+        <div id="centerDiv">
+            <div id="logo">
+                <div id="logoTitle">
+                    SentiQuant
+                </div>
+                <div id="logoDesc">
+                    We do "Sentiment" Analysis
+                </div>
+            </div>
+            <div id="crystalBallDiv">
+                <img id="crystalBall" src="./crystalBall2.png"></img>
+                <div id="bimbop" onClick="allow_put(this);" contenteditable="true">
+                    Enter a Stock <br>
+                    To Predict
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
